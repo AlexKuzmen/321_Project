@@ -361,20 +361,21 @@ Ms = M12_N + ((F41y).*r1./N_to_cm_g);
 
 figure('Name','Shaking Moment');
 plot(theta2,Ms);
+title('Shaking Moment vs θ2');
 xlabel('θ2 [°]');
 ylabel('Ms [Nm]');
 grid on;
-hold off;
 
 %% (v) Force Magnitude at each turning pair vs θ2
-F12_mag = sqrt(F12x.^2 + F12y.^2);
-F23_mag = sqrt(F32x.^2 + F32y.^2);
-F34_mag = sqrt(F34x.^2 + F34y.^2);
-F14_mag = sqrt(F41x.^2 + F41y.^2);
+F12_mag = sqrt(F12x.^2 + F12y.^2)./N_to_cm_g;
+F23_mag = sqrt(F32x.^2 + F32y.^2)./N_to_cm_g;
+F34_mag = sqrt(F34x.^2 + F34y.^2)./N_to_cm_g;
+F14_mag = sqrt(F41x.^2 + F41y.^2)./N_to_cm_g;
 
-figure('Name','Shaking Moment');
-plot(theta2,Ms);
+figure('Name','Turning Pairs');
+plot(theta2,F12_mag,'b',theta2,F23_mag,'g',theta2,F34_mag,'r',theta2,F14_mag,'y');
+title('Turning Pair Force Magnitude vs θ2');
 xlabel('θ2 [°]');
-ylabel('Ms [Nm]');
+ylabel('Turning Pairs [N]');
+legend({'|F12| [N]','|F23| [N]','|F34| [N]','|F14| [N]'},'Location','northeast');
 grid on;
-hold off;
