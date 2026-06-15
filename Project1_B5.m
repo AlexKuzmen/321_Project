@@ -65,6 +65,7 @@ plot(60, theta4_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,theta4_deg_60, sprintf('  (%.1f, %.3f)', 60,theta4_deg_60));
 
 legend({'θ3','θ4'},'Location','Southeast');
+grid on;
 hold off;
 
 %% b) θ̇3, θ̇4 vs θ2
@@ -92,6 +93,7 @@ plot(60, theta4_dot_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,theta4_dot_deg_60, sprintf('  (%.1f, %.3f)', 60,theta4_dot_deg_60));
 
 legend({'θ̇3','θ̇4'},'Location','Southeast');
+grid on;
 hold off;
 
 %% c) θ̈3, θ̈4 vs θ2
@@ -126,6 +128,7 @@ plot(60, theta4_doubledot_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,theta4_doubledot_deg_60, sprintf('  (%.1f, %.3f)', 60,theta4_doubledot_deg_60));
 
 legend({'θ̈3','θ̈4'},'Location','Southeast');
+grid on;
 hold off;
 
 %% d) xp, yp vs θ2
@@ -153,6 +156,7 @@ plot(60, yp_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,yp_deg_60, sprintf('  (%.1f, %.3f)', 60,yp_deg_60));
 
 legend({'xp','yp'},'Location','Southeast');
+grid on;
 hold off;
 
 %% e) Velocity magnitude |vp| vs θ2
@@ -178,6 +182,7 @@ plot(60, vp_mag_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,vp_mag_deg_60, sprintf('  (%.1f, %.3f)', 60,vp_mag_deg_60));
 
 legend({'vp'},'Location','Southeast');
+grid on;
 hold off;
 
 %% f) Acceleration Magnitude |ap| vs θ2
@@ -207,6 +212,7 @@ plot(60, ap_mag_deg_60, 'ro', 'MarkerFaceColor', 'r', ...
 text(60,ap_mag_deg_60, sprintf('  (%.1f, %.3f)', 60,ap_mag_deg_60));
 
 legend({'ap'}, 'Location', 'Southeast');
+grid on;
 hold off;
 
 %% g) Coupler Curve yp vs xp
@@ -325,5 +331,50 @@ plot(theta2, M12_N);
 title('Driving Torque: M12 vs θ2');
 xlabel('θ2 [°]');
 ylabel('M12 [Nm]');
+grid on;
 
-%% (ii) Polar Plot of shaking force Fs (mag and dir)?
+%% (ii) Polar Plot of shaking force Fs (mag and dir)
+Fs_mag = sqrt((-F12x+F41x).^2+(-F12y+F41y).^2)./N_to_cm_g; %txtbook p.391 9.2-12
+Fs_dir = atan2((-F12y+F41y), (-F12x+F41x)); %txtbook p.391 9.2-10
+
+figure('Name', 'Polar Fs');
+polarplot(Fs_dir, Fs_mag);
+title('Shaking Force [N] at θ2');
+legend({'Fs [N]'})
+grid on;
+
+%% (iii) Components of Fs vs θ2
+Fs_x = (-F12x+F41x)./N_to_cm_g;
+Fs_y = (-F12y+F41y)./N_to_cm_g;
+
+figure('Name', 'Shaking Force Componenets');
+plot(theta2, Fs_x, 'b', theta2, Fs_y, 'r');
+title('Shaking Force Components vs θ2');
+xlabel('θ2 [°]');
+ylabel('Force Components [N]');
+legend({'Fs_x [N]', 'Fs_y [N]'}, 'Location','southeast');
+grid on;
+hold off;
+
+%% (iv) Shaking Moment Ms vs θ2
+Ms = M12_N + ((F41y).*r1./N_to_cm_g);
+
+figure('Name','Shaking Moment');
+plot(theta2,Ms);
+xlabel('θ2 [°]');
+ylabel('Ms [Nm]');
+grid on;
+hold off;
+
+%% (v) Force Magnitude at each turning pair vs θ2
+F12_mag = sqrt(F12x.^2 + F12y.^2);
+F23_mag = sqrt(F32x.^2 + F32y.^2);
+F34_mag = sqrt(F34x.^2 + F34y.^2);
+F14_mag = sqrt(F41x.^2 + F41y.^2);
+
+figure('Name','Shaking Moment');
+plot(theta2,Ms);
+xlabel('θ2 [°]');
+ylabel('Ms [Nm]');
+grid on;
+hold off;
